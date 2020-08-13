@@ -90,3 +90,20 @@ $ docker  run -it nodo3 bash
 ```
 Lanzar una shell nos permitirá modificar el archivo `/etc/cassandra/cassandra.yaml` y poder 
 configurar las variables que anteriormente se mencionaba.
+
+## Monitoreo de servicios
+
+Una vez que se inicializó la imagen de cassandra y haber lanzado el comando `bash`, podremos
+monitorear el servicio de `cassandra, para ello podemos ejecutar el siguiente comando:
+
+```bash 
+# service cassandra status
+```
+Si queremos parar,reiniciar o iniciar el servicio basta con colocar:
+
+```bash
+# service cassandra [stop|restart|start]
+```
+
+
+
