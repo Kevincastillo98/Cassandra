@@ -111,3 +111,24 @@ el estado del nodo, mediante:
 ```bash
 # nodetool status
 ```
+
+## Logs
+
+una vez que iniciemos nuestros contenedores, podemos verificar los logs en caso de falla en algun nodo:
+
+```bash
+$ docker logs nodo1
+$ docker logs nodo2
+$ docker logs nodo3
+```
+
+En caso de mostrar algún error en algún nodo, solo basta con detener el contenedor y volver
+a inicializarlo
+
+```bash 
+$ docker  stop    nodoX
+$ docker  start   nodoX
+$ docker  attach  nodoX
+```
+donde `nodoX` representa alguno de los nodos creados anteriormente
+
