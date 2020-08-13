@@ -40,9 +40,17 @@ $ docker run --name nodo3  --network redprueba -d cassandra
 Ya que nosotros queremos interconectar nustros nodos, necesitaremos cambiar los 
 parametros de configuración, dentro de los que se encontrarán:
 
-1. CASSANDRA_CLUSTER_NAME
-2. CASSANDRA_NUM_TOKENS
-3. CASSANDRA_DC
-4. CASSANDRA_RACK
-5. CASSANDRA_ENDOPOINT_SNITCH
-6. CASSANDRA_SEEDS
+1. `CASSANDRA_CLUSTER_NAME`
+2. `CASSANDRA_NUM_TOKENS`
+3. `CASSANDRA_DC`
+4. `CASSANDRA_RACK`
+5. `CASSANDRA_ENDOPOINT_SNITCH`
+6. `CASSANDRA_SEEDS`
+
+Para crear un cluster, es necesario establecer el mismo `CLUSTER_NAME`, en donde el nombre
+será `cluster_test`.
+
+La variable `CASSANDRA_NUM_TOKENS` nos dice
+
+
+
