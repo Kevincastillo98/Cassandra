@@ -27,6 +27,8 @@ $ sudo mkdir -p /var/lib/container_data/cassandra-nodo-1
 $ sudo mkdir -p /var/lib/container_data/cassandra-nodo-2
 $ sudo mkdir -p /var/lib/container_data/cassandra-nodo-3
 ```
+
+
 ## Inicializando una imagen de docker
 
 Una vez se obtuvo la imagen de cassandra, podremos inicializar a imagen.
@@ -37,8 +39,9 @@ $ docker run --name nodo2  --network redprueba -d cassandra
 $ docker run --name nodo3  --network redprueba -d cassandra 
 ```
 
-Ya que nosotros queremos interconectar nustros nodos, necesitaremos cambiar los 
-parametros de configuración, dentro de los que se encontrarán:
+Tambien podemos ejecutar el nodo con las siguientes opciones de configuracion, las
+cuales son variables de entorno que nos permiten modificar los valores del archivo
+`/etc/cassandra/cassandra.yaml`
 
 1. `CASSANDRA_CLUSTER_NAME`
 2. `CASSANDRA_NUM_TOKENS`
@@ -47,15 +50,43 @@ parametros de configuración, dentro de los que se encontrarán:
 5. `CASSANDRA_ENDOPOINT_SNITCH`
 6. `CASSANDRA_SEEDS`
 
-Para crear un cluster, es necesario establecer el mismo `CLUSTER_NAME`, en donde el nombre
-será `cluster_test`.
+Sin embargo también podemos configurar el archivo `/etc/cassandra/cassandra.yaml` lanzando
+una shell después de haber ejecutado la imagen, ambas prácticas son válidas, sin embargo el 
+modificar las variables de entorno nos facilitará la tarea de edición de archivo.
 
-La variable `CASSANDRA_NUM_TOKENS` nos dice
-
-Para poder obtener la ip de un contenedor basta ejecutar la siguinte linea:
+Si deseamos editar las variables de entorno, lo hariamos de la sigueinte forma:
 
 ```bash
-$ docker inspect -f "{{.NetworkSettings.IPAddress}}" <nombre de container o imagen>
+$ docker run --name nodo1  --network redprueba -d cassandra \
+  -e CASSANDRA_CLUSTER_NAME="clustertest" \
+  -e CASSANDRA_NUM_TOKENS="8" \
+  -e CASSANDRA_DC="dc1" \
+  -e CASSANDRA_RACK="rack1" \
+  -e CASSANDRA_ENDPOINT_SNITCH="GossipingPropertyFileSnitch" \
+  -e CASSANDRA_SEEDS="$(docker inspect -f "{{.NetworkSettings.IPAddress}}") nodo1" \ 
+  -v /var/lib/container_data/nodo1:/var/lib/cassandra -d cassandra 
 ```
 
+## Almacenamiento local
 
+Una vez creada nuestra carpeta `/var/lib/container_data`
+y haber creado las carpetas `nodo1` `nodo2` `nodo3` podemos  almacenar de forma local 
+los datos de nuestros keyspaces.
+
+```bash 
+$ docker run --name nodo1 -v /var/lib/container_data/nodo1:/var/lib/cassandra -d cassandra
+$ docker run --name nodo2 -v /var/lib/container_data/nodo2:/var/lib/cassandra -d cassandra
+$ docker run --name nodo3 -v /var/lib/container_data/nodo3:/var/lib/cassandra -d cassandra
+```
+
+## Lanzar una shell
+
+Para poder hacer uso de una shell, después de inicializar una imagen:
+
+```bash 
+$ docker  run -it nodo1 bash
+$ docker  run -it nodo2 bash
+$ docker  run -it nodo3 bash
+```
+Lanzar una shell nos permitirá modificar el archivo `/etc/cassandra/cassandra.yaml` y poder 
+configurar las variables que anteriormente se mencionaba.
