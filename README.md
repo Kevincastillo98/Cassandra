@@ -52,5 +52,10 @@ será `cluster_test`.
 
 La variable `CASSANDRA_NUM_TOKENS` nos dice
 
+Para poder obtener la ip de un contenedor basta ejecutar la siguinte linea:
+
+```bash
+$ docker inspect -f "{{.NetworkSettings.IPAddress}}" <nombre de container o imagen>
+```
 
 
