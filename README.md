@@ -104,6 +104,10 @@ Si queremos parar,reiniciar o iniciar el servicio basta con colocar:
 ```bash
 # service cassandra [stop|restart|start]
 ```
+Y para verificar que el nodo está encendido, podemos usar la herramienta `nodetool`
+la cual nos permitirá efectuar algunas acciones sobre el nodo, una de ellas es  la de verificar
+el estado del nodo, mediante:
 
-
-
+```bash
+# nodetool status
+```
