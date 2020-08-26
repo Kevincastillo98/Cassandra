@@ -1,0 +1,75 @@
+version: '3'
+services:
+    nodo1:
+        image: cassandra:3.11
+        container_name: nodo1
+        # ip estatica
+        networks:
+            datacenter1:
+                ipv4_address: 172.30.0.2
+        volumes:
+            - /var/lib/container_data/cassandra-nodo-1:/var/lib/cassandra
+        environment:
+            - SEEDS=nodo1
+            - CLUSTER_NAME=test_cassandra_dse
+            - DC=dc1
+            - RACK=rack1
+        expose:
+            # Intra-node communication
+            - 7000
+            # TLS intra-node communication
+            - 7001
+            # JMX
+            - 7199
+            # CQL
+            - 9042
+            # CQL SSL
+            - 9142
+        ports:
+            - 9042:9042
+    nodo2:
+        image: cassandra
+        container_name: nodo2
+        networks:
+            datacenter1:
+                ipv4_address: 172.30.0.3
+        volumes:
+            - /var/lib/container_data/cassandra-nodo-2:/var/lib/cassandra
+        environment:
+            - SEEDS=nodo1
+            - CLUSTER_NAME=test_cassandra_dse
+            - DC=dc1
+            - RACK=rack1
+        expose:
+            - 7000
+            - 7001
+            - 7199
+            - 9042
+            - 9142
+        ports:
+            - 9043:9042
+        depends_on:
+            - nodo1
+    nodo3:
+        image: cassandra
+        container_name: nodo3
+        networks:
+            datacenter1:
+                ipv4_address: 172.30.0.4
+        volumes:
+            - /var/lib/container_data/cassandra-nodo-3:/var/lib/cassandra
+        environment:
+            - SEEDS=nodo1
+            - CLUSTER_NAME=test_cassandra_dse
+            - DC=dc1
+            - RACK=rack1
+        expose:
+            - 7000
+            - 7001
+            - 7199
+            - 9042
+            - 9142
+        ports:
+            - 9044:9042
+        depends_on:
+            - nodo1
