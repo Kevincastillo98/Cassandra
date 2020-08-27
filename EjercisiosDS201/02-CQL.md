@@ -12,19 +12,18 @@ La tabla contendrá los siguientes atributos:
 
 |Nombre de la columna   |  Tipo de dato  |  
 |---|---|
-| video_id  | uuid  |   
-| added_date | timestamp  |  
-| title  | text  | 
+| `video_id`  | uuid  |   
+| `added_date` | timestamp  |  
+| `title` | text  | 
 
 ## Realizando nuestro trabajo
 
 En primer lugar, debemos crear un keyspace (simil a un schema en SQL)
 
 ```cql
-CREATE KEYSPACE killrvideo WITH replication=
-	{'class':'SimpleStrategy' , 'replication_factor':3};
+CREATE KEYSPACE killrvideo WITH replication={'class':'SimpleStrategy' , 'replication_factor':3};
 ```
 
-
-
-
+¿Cúal es la función principal de un `KEYSPACE`?
+ 
+ 
